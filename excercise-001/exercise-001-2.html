@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <!-- Form for submitting competition details -->
+    <form action="/form/submit" method="POST">
+        <!-- First section - Contact Information -->
+        <fieldset>
+            <legend>
+                Contact Information
+            </legend>
+            <div>
+                <!-- Input fields for First name, Last name and email -->
+                <div>
+                    First name: <input type="text" name="firstname" value=""><br>
+                    Last name: <input type="text" name="lastname" value=""><br>
+                    E-mail: <input type="email" name="email" value=""><br>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Second section - Competition Question -->
+        <fieldset>
+            <legend>
+                Competition Question
+            </legend>
+
+            <div>
+                How tall is the Eiffel Tower in Paris, France? <br>
+
+                <!-- Radio buttons for height of Eiffel tower -->
+                <input type="radio" name="height" value="584ft"> 584ft <br>
+                <input type="radio" name="height" value="784ft"> 784ft <br>
+                <input type="radio" name="height" value="984ft"> 984ft <br>
+                <input type="radio" name="height" value="1184ft"> 1184ft <br>
+
+            </div>
+
+        </fieldset>
+
+        <!-- Third section - Tiebreaker Question -->
+        <fieldset>
+            <legend>
+                Tiebreaker Question
+            </legend>
+            <div>
+                In 25 words or less, say why you would like to win $10,000: <br>
+                <textarea name="tiebreaker-ans" cols="40" rows="10"></textarea>
+
+            </div>
+        </fieldset>
+
+
+        <!-- Fourth section - Submit button -->
+
+        <fieldset>
+            <legend>
+                Enter competition
+            </legend>
+            <input type="submit" value="Enter Competition">
+
+        </fieldset>
+
+    </form>
+
+</body>
+
+</html>
