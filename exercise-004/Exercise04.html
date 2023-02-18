@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head></head>
+
+<body>
+    <div id="maincontainer"></div>
+    <script>
+
+        let exerciseHeading = document.createElement("h2");
+        exerciseHeading.innerHTML = "Exercise 04 : JavaScript&DOM";
+
+
+        // Create a button element 
+        let button = document.createElement("button");
+        button.innerHTML = "Click me to display Date and Time";
+        // Add the state of toggled to the button
+        button.setAttribute("toggled", "false");
+
+        // Add event listener to the button element
+        // when the button is clicked move the button to top right corner of the screen
+        // and update the button text to display the current date and time updated every second.
+        button.addEventListener("click", function () {
+            if (button.getAttribute("toggled") == "false") {
+                // if the button is toggled on, move the button to top right corner of the screen
+                button.style.position = "fixed";
+                button.style.top = "0px";
+                button.style.right = "0px";
+
+                button.innerHTML = new Date();
+
+                // toggle the state of the button
+                button.setAttribute("toggled", "true");
+            } else {
+                // if the button is toggled off, move the button to the same position as before, stop the timer
+                button.style.position = "static";
+                button.style.top = "";
+                button.style.right = "";
+
+                // toggle the state of the button
+                button.setAttribute("toggled", "false");
+            }
+        });
+
+        /** Web worker is being used here **/
+        // update the button text to display the current date and time updated every second, if the buttun is toggled on.
+        // worker thread is used for updating the button color
+        let worker = new Worker("worker.js");
+        setInterval(function () {
+            if (button.getAttribute("toggled") == "true") {
+                button.innerHTML = new Date()
+                worker.postMessage(Date.now());
+
+                worker.onmessage = function (event) {
+                    button.style.backgroundColor = event.data.backgroundColor;
+                    button.style.color = event.data.foregroundColor;
+                }
+            }
+        }, 1000);
+
+        // === Personal Info ===
+        // This part consists of anchor tag, placeholder div, and 3 li tags with text content. 
+        // <a> Personal Info
+        // <div> placeholder div
+        // <li> name&surname of student, ID:63010034
+        // <li> Subject: Software Studio
+        // <li> Semester: 2/2565
+
+        let personalInfoAnchor = document.createElement("a");
+        personalInfoAnchor.href = ""
+        personalInfoAnchor.innerText = "Personal Info";
+        personalInfoAnchor.setAttribute("toggled", "false");
+
+        personalInfoContents_ = [
+            "Krissada Sarawit 63010034",
+            "Subject: Software Studio",
+            "Semester: 2/2565"
+        ]
+
+
+        let personalInfoPlaceHolderDiv = document.createElement("div");
+        personalInfoPlaceHolderDiv.style.display = "none";
+        personalInfoContents_.forEach((content) => {
+            let li = document.createElement("li");
+            li.innerHTML = content;
+            personalInfoPlaceHolderDiv.appendChild(li);
+        })
+
+
+        personalInfoAnchor.addEventListener("mouseover", (e) => {
+            e.preventDefault();
+            personalInfoAnchor.style.backgroundColor = "yellow";
+        })
+        personalInfoAnchor.addEventListener("mouseout", (e) => {
+            e.preventDefault();
+            personalInfoAnchor.style.backgroundColor = "";
+        })
+        personalInfoAnchor.addEventListener("click", (e) => {
+            e.preventDefault();
+            // update the state of the anchor tag
+            if (personalInfoAnchor.getAttribute("toggled") == "false") {
+                personalInfoAnchor.setAttribute("toggled", "true");
+            } else {
+                personalInfoAnchor.setAttribute("toggled", "false");
+            }
+
+            // toggle the display of the placeholder div
+            if (personalInfoPlaceHolderDiv.style.display == "block") {
+                personalInfoPlaceHolderDiv.style.display = "none";
+            } else {
+                personalInfoPlaceHolderDiv.style.display = "block";
+            }
+        });
+
+
+
+        // create H1 element
+        let snapshotsHeading = document.createElement("h1");
+        snapshotsHeading.innerHTML = "Snapshots"; // 📸
+
+        snapshotImage = document.createElement("img");
+        snapshotImage.style.maxWidth = "25%";
+        landingImageUrl = "https://images.unsplash.com/photo-1676390812769-9fda945483fc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1738&q=80"
+        snapshotImage.src = landingImageUrl;
+
+        // Images for snapshots
+        snapshotsContent = {
+            "Fireworks": "https://images.unsplash.com/photo-1533219057257-4bb9ed5d2cc6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
+            "Crest": "https://images.unsplash.com/photo-1515655371474-253e8d8a575a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2944&q=80",
+            "Action": "https://images.unsplash.com/photo-1597019558926-3eef445fdf60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
+            "Buffalo": "https://images.unsplash.com/photo-1536766124229-31a2f84a15e4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
+        }
+
+        // Create a placeholder div for the snapshots, and append the li elements to the placeholder div.
+        snapshotsPlaceHolderDiv = document.createElement("div");
+        Object.keys(snapshotsContent).forEach((key) => {
+            let li = document.createElement("li");
+            let a = document.createElement("a");
+            a.innerHTML = key;
+            a.href = ""
+            li.id = key;
+            li.appendChild(a);
+            snapshotsPlaceHolderDiv.appendChild(li);
+
+            // add event listener to each li
+            li.addEventListener("click", (e) => {
+                e.preventDefault();
+                snapshotImage.src = snapshotsContent[key];
+            })
+        })
+
+
+        // Append elements to the document.
+        document.body.appendChild(exerciseHeading);
+        let buttonDiv = document.createElement("div");
+        buttonDiv.appendChild(button);
+        document.body.appendChild(buttonDiv);
+        document.body.appendChild(personalInfoAnchor);
+        document.body.appendChild(personalInfoPlaceHolderDiv);
+        document.body.appendChild(snapshotsHeading);
+        document.body.appendChild(snapshotsPlaceHolderDiv);
+        document.body.appendChild(snapshotImage);
+
+
+
+    </script>
+</body>
+
+</html>
