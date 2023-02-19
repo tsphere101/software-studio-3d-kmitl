@@ -7,11 +7,12 @@
     <div id="maincontainer"></div>
     <script>
 
+        // Heading
         let exerciseHeading = document.createElement("h2");
         exerciseHeading.innerHTML = "Exercise 04 : JavaScript&DOM";
 
 
-        // Create a button element 
+        // Date Time button
         let button = document.createElement("button");
         button.innerHTML = "Click me to display Date and Time";
         // Add the state of toggled to the button
@@ -21,24 +22,24 @@
         // when the button is clicked move the button to top right corner of the screen
         // and update the button text to display the current date and time updated every second.
         button.addEventListener("click", function () {
-            if (button.getAttribute("toggled") == "false") {
+            // Toggle the state of the button            
+            button.setAttribute("toggled", button.getAttribute("toggled") == "false" ? "true" : "false");
+
+            if (button.getAttribute("toggled") == "true") {
                 // if the button is toggled on, move the button to top right corner of the screen
                 button.style.position = "fixed";
                 button.style.top = "0px";
                 button.style.right = "0px";
+                button.style.sticky = "top";
 
                 button.innerHTML = new Date();
 
-                // toggle the state of the button
-                button.setAttribute("toggled", "true");
             } else {
                 // if the button is toggled off, move the button to the same position as before, stop the timer
                 button.style.position = "static";
                 button.style.top = "";
                 button.style.right = "";
-
-                // toggle the state of the button
-                button.setAttribute("toggled", "false");
+                button.style.sticky = "";
             }
         });
 
@@ -72,7 +73,7 @@
         personalInfoAnchor.setAttribute("toggled", "false");
 
         personalInfoContents_ = [
-            "Krissada Sarawit 63010034",
+            "Krissada Sarawit, ID : 63010034",
             "Subject: Software Studio",
             "Semester: 2/2565"
         ]
@@ -97,12 +98,8 @@
         })
         personalInfoAnchor.addEventListener("click", (e) => {
             e.preventDefault();
-            // update the state of the anchor tag
-            if (personalInfoAnchor.getAttribute("toggled") == "false") {
-                personalInfoAnchor.setAttribute("toggled", "true");
-            } else {
-                personalInfoAnchor.setAttribute("toggled", "false");
-            }
+            // Update the state of the anchor tag
+            personalInfoAnchor.setAttribute("toggled", personalInfoAnchor.getAttribute("toggled") == "true" ? "false" : "true");            
 
             // toggle the display of the placeholder div
             if (personalInfoPlaceHolderDiv.style.display == "block") {
@@ -160,9 +157,6 @@
         document.body.appendChild(snapshotsHeading);
         document.body.appendChild(snapshotsPlaceHolderDiv);
         document.body.appendChild(snapshotImage);
-
-
-
     </script>
 </body>
 
