@@ -102,11 +102,12 @@
             personalInfoAnchor.setAttribute("toggled", personalInfoAnchor.getAttribute("toggled") == "true" ? "false" : "true");            
 
             // toggle the display of the placeholder div
-            if (personalInfoPlaceHolderDiv.style.display == "block") {
-                personalInfoPlaceHolderDiv.style.display = "none";
-            } else {
+            if (personalInfoAnchor.getAttribute("toggled") == "true") {
                 personalInfoPlaceHolderDiv.style.display = "block";
+            } else {
+                personalInfoPlaceHolderDiv.style.display = "none";
             }
+
         });
 
 
