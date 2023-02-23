@@ -6,6 +6,8 @@
 <body>
     <div id="maincontainer"></div>
     <script>
+        // Web worker
+        let worker = new Worker("worker.js");
 
         // Heading
         let exerciseHeading = document.createElement("h2");
@@ -32,7 +34,15 @@
                 button.style.right = "0px";
                 button.style.sticky = "top";
 
-                button.innerHTML = new Date();
+                button.innerHTML = new Date()
+                worker.postMessage(Date.now());
+
+                worker.onmessage = function (event) {
+                    button.style.backgroundColor = event.data.backgroundColor;
+                    button.style.color = event.data.foregroundColor;
+                }
+                
+                
 
             } else {
                 // if the button is toggled off, move the button to the same position as before, stop the timer
@@ -46,7 +56,6 @@
         /** Web worker is being used here **/
         // update the button text to display the current date and time updated every second, if the buttun is toggled on.
         // worker thread is used for updating the button color
-        let worker = new Worker("worker.js");
         setInterval(function () {
             if (button.getAttribute("toggled") == "true") {
                 button.innerHTML = new Date()
@@ -99,7 +108,7 @@
         personalInfoAnchor.addEventListener("click", (e) => {
             e.preventDefault();
             // Update the state of the anchor tag
-            personalInfoAnchor.setAttribute("toggled", personalInfoAnchor.getAttribute("toggled") == "true" ? "false" : "true");            
+            personalInfoAnchor.setAttribute("toggled", personalInfoAnchor.getAttribute("toggled") == "true" ? "false" : "true");
 
             // toggle the display of the placeholder div
             if (personalInfoAnchor.getAttribute("toggled") == "true") {

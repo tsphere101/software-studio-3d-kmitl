@@ -26,7 +26,6 @@ const COLORS = [
 let currentColorIndex = 0;
 
 addEventListener("message", (event) => {
-    const colorIndex = event.data;
     const backgroundColor = COLORS[currentColorIndex];
     const foregroundColor = COLORS[(currentColorIndex + 10) % COLORS.length];
     currentColorIndex += 1;
