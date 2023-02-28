@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import VoteButton from "./VoteButton";
-import style from "./Card.css"
 
 class Card extends React.Component {
     constructor(props) {
