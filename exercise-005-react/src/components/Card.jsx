@@ -1,59 +1,98 @@
 import React, { useState } from "react";
-function Card(props) {
-    const { card } = props;
+import VoteButton from "./VoteButton";
+import style from "./Card.css"
 
-    let [votes, setVotes] = useState(0);
+class Card extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            score: 0,
+        };
+    }
 
-    function onVote() {
-        if (votes >= 10) {
+    onVote = () => {
+        let score = this.state.score;
+        if (score >= 10) {
             alert("Cannot Vote more");
             return;
         }
-        setVotes(votes + 1);
-    }
+        this.setState({ score: this.state.score + 1 });
+    };
 
-    function onUnvote() {
-        if (votes <= 0) {
-            alert("Cannot unvote");
+    onUnvote = () => {
+        let score = this.state.score;
+        if (score <= 0) {
+            alert("Cannot Unvote more");
             return;
         }
-        setVotes(votes - 1);
+        this.setState({ score: this.state.score - 1 });
+    };
+
+    updateScore = (score) => {
+        if (this.state.score + score < 0) {
+            alert("Cannot Unvote more");
+            return;
+        }
+        if (this.state.score + score > 10) {
+            alert("Cannot Vote more");
+            return;
+        }
+        this.setState({ score: score + this.state.score });
     }
 
-    let score = votes;
-    if (votes == 0) {
-        score = "MIN";
-    } else if (votes >= 10) {
-        score = "MAX";
+    scoreDisplay() {
+        let score = this.state.score;
+
+        if (score >= 10) {
+            return "MAX";
+        } else if (score <= 0) {
+            return "MIN";
+        }
+        return score;
     }
 
-    return (
-        <div className="container">
-            <div className="card">
-                <div className="text-center h3 mt-4">{card.title}</div>
-                <div className="row justify-content-center">
-                    <div className="col-sm-7 p-5">{card.body}</div>
-                    <div className="col-sm-5">
-                        <img
-                            src={card.image}
-                            alt="food"
-                            className="img-fluid p-5"
+    render() {
+        return (
+            <div className="container card">
+                    <div className="h3 mt-4 mx-2">
+                        {this.props.card.title}
+                    </div>
+                    <div className="h6 mt-4 mx-2">
+                        {this.props.card.subtitle}
+                    </div>
+                    <div className="row justify-content-center">
+                        <div className="col-sm-7 p-5">
+                            {this.props.card.body}
+                        </div>
+                        <div className="col-sm-5">
+                            <img
+                                src={this.props.card.image}
+                                alt="food"
+                                className="img-fluid p-5"
+                            />
+                        </div>
+
+
+                        <VoteButton
+                            parentCallback={this.updateScore}
+                            text="Click to Vote"
+                            className="vote-btn"
+                            value={1}
+                        />
+
+                        <div className="score">
+                            {this.scoreDisplay()}
+                        </div>
+
+                        <VoteButton
+                            parentCallback={this.updateScore}
+                            text="Click to Unvote"
+                            className="vote-btn"
+                            value={-1}
                         />
                     </div>
-
-                    <button className="btn btn-primary m-2" onClick={onVote}>
-                        Vote
-                    </button>
-
-                    <div className="btn col-sm-1 m-2">{score}</div>
-
-                    <button className="btn btn-danger m-2" onClick={onUnvote}>
-                        Unvote
-                    </button>
                 </div>
-            </div>
-        </div>
-    );
+        );
+    }
 }
-
 export default Card;
