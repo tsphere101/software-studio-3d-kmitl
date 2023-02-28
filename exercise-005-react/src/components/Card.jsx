@@ -10,24 +10,6 @@ class Card extends React.Component {
         };
     }
 
-    onVote = () => {
-        let score = this.state.score;
-        if (score >= 10) {
-            alert("Cannot Vote more");
-            return;
-        }
-        this.setState({ score: this.state.score + 1 });
-    };
-
-    onUnvote = () => {
-        let score = this.state.score;
-        if (score <= 0) {
-            alert("Cannot Unvote more");
-            return;
-        }
-        this.setState({ score: this.state.score - 1 });
-    };
-
     updateScore = (score) => {
         if (this.state.score + score < 0) {
             alert("Cannot Unvote more");
